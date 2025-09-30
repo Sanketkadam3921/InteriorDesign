@@ -12,8 +12,7 @@ export default function Hero() {
         "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1200",
         "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200",
         "https://images.unsplash.com/photo-1615874959474-d609969a20ed?w=1200",
-        "https://images.unsplash.com/photo-1600585154084-0a3b6f6b33cf?w=1200",
-    ];
+        "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1200",];
 
     const [emblaRef, emblaApi] = useEmblaCarousel(
         {
@@ -69,14 +68,18 @@ export default function Hero() {
                                         variant="h2"
                                         component="h1"
                                         gutterBottom
-                                        sx={{ fontWeight: "bold" }}
+                                        sx={{ fontWeight: "bold", color: "#ffffff" }} // Force white
                                     >
                                         We Create Dream Spaces
                                     </Typography>
-                                    <Typography variant="h5" gutterBottom sx={{ mb: 4 }}>
-                                        Transform your space with our expert interior design
-                                        services
+                                    <Typography
+                                        variant="h5"
+                                        gutterBottom
+                                        sx={{ mb: 4, color: "#f5f5f5" }} // Softer white for subtitle
+                                    >
+                                        Transform your space with our expert interior design services
                                     </Typography>
+
                                     <Button
                                         variant="contained"
                                         size="large"

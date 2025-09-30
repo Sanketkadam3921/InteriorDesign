@@ -8,7 +8,7 @@ import DesignDetail from "../pages/designs/DesignDetail";
 import DesignCategories from "../pages/designs/DesignCategories";
 import ContactForm from "../pages/enquiries/ContactForm";
 import ProjectDetail from "../pages/projects/ProjectDetail";
-import NotFound from "../pages/NotFound";
+import NotFound from "../pages/notfound/NotFound";
 
 export default function AppRoutes() {
     return (
