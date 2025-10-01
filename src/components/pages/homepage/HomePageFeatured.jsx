@@ -9,7 +9,7 @@ export default function HomePageFeatured() {
         {
             id: 1,
             title: 'Modern Living Room',
-            image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=500',
+            image: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=500',
             description: 'Contemporary design with clean lines and natural materials'
         },
         {
@@ -21,34 +21,55 @@ export default function HomePageFeatured() {
         {
             id: 3,
             title: 'Kitchen Renovation',
-            image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=500',
+            image: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=500',
             description: 'Modern kitchen with smart storage solutions'
         }
     ];
 
     return (
         <Box sx={{ backgroundColor: '#f5f5f5', py: 8 }}>
-            <Container maxWidth="lg">
+            <Container maxWidth="xl">
                 <Typography variant="h3" component="h2" textAlign="center" gutterBottom>
                     Featured Projects
                 </Typography>
                 <Grid container spacing={4} sx={{ mt: 4 }}>
                     {featuredProjects.map((project) => (
-                        <Grid item xs={12} md={4} key={project.id}>
-                            <Card sx={{ height: '100%' }}>
+                        <Grid item xs={12} sm={6} md={4} key={project.id}>
+                            <Card
+                                sx={{
+                                    height: '100%',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    minHeight: '400px',
+                                    width: '100%'
+                                }}
+                            >
                                 <CardMedia
                                     component="img"
-                                    height="200"
+                                    height="250"
                                     image={project.image}
                                     alt={project.title}
+                                    sx={{
+                                        objectFit: 'cover',
+                                        width: '100%'
+                                    }}
                                 />
-                                <CardContent>
-                                    <Typography variant="h6" gutterBottom>
-                                        {project.title}
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        {project.description}
-                                    </Typography>
+                                <CardContent
+                                    sx={{
+                                        flexGrow: 1,
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        justifyContent: 'space-between'
+                                    }}
+                                >
+                                    <Box>
+                                        <Typography variant="h6" gutterBottom>
+                                            {project.title}
+                                        </Typography>
+                                        <Typography variant="body2" color="text.secondary">
+                                            {project.description}
+                                        </Typography>
+                                    </Box>
                                 </CardContent>
                             </Card>
                         </Grid>

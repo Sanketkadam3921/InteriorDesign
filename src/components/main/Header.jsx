@@ -225,6 +225,8 @@ export default function Header() {
                             alignItems: "center",
                             textDecoration: "none",
                             transition: "transform 0.2s ease",
+                            ml: { xs: -1, md: 0 },   // shift left on mobile
+                            mr: { xs: 2, md: 0 },    // <-- add space between logo+text and hamburger on mobile
                             "&:hover": {
                                 transform: "scale(1.02)",
                             },
@@ -235,12 +237,13 @@ export default function Header() {
                             src={logo}
                             alt="Kalakruti Logo"
                             sx={{
-                                height: 100,
-                                width: 100,
+                                height: { xs: 70, md: 100 },   // smaller logo on mobile
+                                width: { xs: 70, md: 100 },
                                 objectFit: "contain",
                                 backgroundColor: "transparent",
                                 filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.1))",
                                 transition: "transform 0.2s ease",
+
                                 "&:hover": {
                                     transform: "scale(1.05)",
                                 },
@@ -250,10 +253,11 @@ export default function Header() {
                         {/* Text next to logo */}
                         <Box
                             sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center', // center the content
-                                ml: 0, // remove left margin if you want perfect centering
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",  // keeps both texts centered relative to each other
+                                textAlign: "center",   // ensures "STUDIO" stays exactly under "KALAKRUTI"
+                                ml: 0,                 // little gap from logo
                             }}
                         >
                             <Typography
