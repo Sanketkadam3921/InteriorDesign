@@ -86,7 +86,7 @@ export default function DesignList() {
     };
 
     return (
-        <Container maxWidth="lg" sx={{ py: 4 }}>
+        <Container maxWidth="xl" sx={{ py: 4 }}>
             <Typography variant="h3" component="h1" gutterBottom textAlign="center">
                 Design Gallery
             </Typography>

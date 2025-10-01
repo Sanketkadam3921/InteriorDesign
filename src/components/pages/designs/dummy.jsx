@@ -32,6 +32,7 @@ export default function Header() {
     const [mobileOpen, setMobileOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
     const [designsMenuOpen, setDesignsMenuOpen] = useState(false);
+    const [hoverTimeout, setHoverTimeout] = useState(null);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
     const location = useLocation();
@@ -39,13 +40,20 @@ export default function Header() {
     const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
 
     const handleMenuOpen = (event) => {
+        if (hoverTimeout) {
+            clearTimeout(hoverTimeout);
+            setHoverTimeout(null);
+        }
         setAnchorEl(event.currentTarget);
         setDesignsMenuOpen(true);
     };
 
     const handleMenuClose = () => {
-        setAnchorEl(null);
-        setDesignsMenuOpen(false);
+        const timeout = setTimeout(() => {
+            setAnchorEl(null);
+            setDesignsMenuOpen(false);
+        }, 150); // Small delay to prevent flickering
+        setHoverTimeout(timeout);
     };
 
     const navigationItems = [
@@ -88,11 +96,9 @@ export default function Header() {
                 { label: "Home Bar Designs", path: "/designs/home-bar" },
             ],
         },
-        { label: "FAQ", path: "/faq" },
         { label: "Contact", path: "/contact" },
-        { label: "About Us", path: "/aboutus" },
-
     ];
+
     const drawer = (
         <Box sx={{ width: 250 }}>
             {/* LOGO + TEXT inside Drawer */}
@@ -139,7 +145,7 @@ export default function Header() {
                 >
                     <Typography
                         sx={{
-                            color: theme.palette.secondary.main,
+                            color: '#505B5F',
                             fontWeight: 'bold',
                             fontSize: '1.8rem',
                             letterSpacing: '0.1em',
@@ -152,7 +158,7 @@ export default function Header() {
                     </Typography>
                     <Typography
                         sx={{
-                            color: theme.palette.secondary.main,
+                            color: '#505B5F',
                             fontSize: '0.9rem',
                             letterSpacing: '0.2em',
                             fontFamily: 'sans-serif',
@@ -237,14 +243,14 @@ export default function Header() {
             position="fixed"
             elevation={0}
             sx={{
-                backgroundColor: theme.palette.background.paper,
-                color: theme.palette.text.primary,
+                backgroundColor: "white",
+                color: "black",
                 borderBottom: `1px solid ${theme.palette.divider}`,
-                boxShadow: theme.shadows[2],
+                boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
                 zIndex: 1300, // Higher z-index to ensure it stays on top
             }}
         >
-            <Container maxWidth="xl">
+            <Container maxWidth="lg">
                 <Toolbar sx={{ justifyContent: "space-between", minHeight: "100px !important", py: 1 }}>
                     {/* LOGO + TEXT in main Toolbar */}
                     <Box
@@ -255,8 +261,6 @@ export default function Header() {
                             alignItems: "center",
                             textDecoration: "none",
                             transition: "transform 0.2s ease",
-                            ml: { xs: -1, md: 0 },   // shift left on mobile
-                            mr: { xs: 2, md: 0 },    // <-- add space between logo+text and hamburger on mobile
                             "&:hover": {
                                 transform: "scale(1.02)",
                             },
@@ -267,13 +271,12 @@ export default function Header() {
                             src={logo}
                             alt="Kalakruti Logo"
                             sx={{
-                                height: { xs: 70, md: 100 },   // smaller logo on mobile
-                                width: { xs: 70, md: 100 },
+                                height: 100,
+                                width: 100,
                                 objectFit: "contain",
                                 backgroundColor: "transparent",
                                 filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.1))",
                                 transition: "transform 0.2s ease",
-
                                 "&:hover": {
                                     transform: "scale(1.05)",
                                 },
@@ -283,16 +286,15 @@ export default function Header() {
                         {/* Text next to logo */}
                         <Box
                             sx={{
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center",  // keeps both texts centered relative to each other
-                                textAlign: "center",   // ensures "STUDIO" stays exactly under "KALAKRUTI"
-                                ml: 0,                 // little gap from logo
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center', // center the content
+                                ml: 0, // remove left margin if you want perfect centering
                             }}
                         >
                             <Typography
                                 sx={{
-                                    color: theme.palette.secondary.main,
+                                    color: '#505B5F',
                                     fontWeight: 'bold',
                                     fontSize: '2.2rem',
                                     letterSpacing: '0.1em',
@@ -305,7 +307,7 @@ export default function Header() {
                             </Typography>
                             <Typography
                                 sx={{
-                                    color: theme.palette.secondary.main,
+                                    color: '#505B5F',
                                     fontSize: '1rem',
                                     letterSpacing: '0.2em',
                                     fontFamily: 'sans-serif',
@@ -339,7 +341,18 @@ export default function Header() {
                                 {navigationItems.map((item) =>
                                     item.dropdown ? (
                                         <NavigationMenuItem key={item.label}>
-                                            <NavigationMenuTrigger onMouseEnter={handleMenuOpen}>
+                                            <NavigationMenuTrigger
+                                                onMouseEnter={handleMenuOpen}
+                                                sx={{
+                                                    color: designsMenuOpen ? theme.palette.primary.main : 'inherit',
+                                                    borderBottom: designsMenuOpen ? `2px solid ${theme.palette.primary.main}` : '2px solid transparent',
+                                                    borderRadius: 0,
+                                                    '&:hover': {
+                                                        color: theme.palette.primary.main,
+                                                        backgroundColor: 'transparent',
+                                                    }
+                                                }}
+                                            >
                                                 {item.label}
                                             </NavigationMenuTrigger>
                                             <NavigationMenuContent
@@ -347,35 +360,49 @@ export default function Header() {
                                                 open={designsMenuOpen}
                                                 onClose={handleMenuClose}
                                             >
-                                                <Box
-                                                    sx={{
-                                                        display: "grid",
-                                                        gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", // auto create columns
-                                                        gap: 2,
-                                                        p: 2,
-                                                        maxWidth: "1000px", // adjust width of dropdown box
-                                                    }}
-                                                >
-                                                    {item.dropdown.map((subItem) => (
-                                                        <NavigationMenuLink
-                                                            key={subItem.label}
-                                                            to={subItem.path}
-                                                            asChild
-                                                            onClick={handleMenuClose}
-                                                            style={{
-                                                                padding: "6px 12px",
-                                                                borderRadius: "4px",
-                                                                textDecoration: "none",
-                                                                color: "inherit",
-                                                                fontSize: "0.95rem",
-                                                            }}
-                                                        >
-                                                            {subItem.label}
-                                                        </NavigationMenuLink>
-                                                    ))}
+                                                <Box sx={{ display: 'flex', width: '100%', gap: 0 }}>
+                                                    {/* Column 1 */}
+                                                    <Box sx={{ flex: 1, p: 2 }}>
+                                                        {item.dropdown.slice(0, 10).map((subItem) => (
+                                                            <NavigationMenuLink
+                                                                key={subItem.label}
+                                                                to={subItem.path}
+                                                                asChild
+                                                                onClick={handleMenuClose}
+                                                                isHighlighted={subItem.label === 'Modular Kitchen Designs'}
+                                                            >
+                                                                {subItem.label}
+                                                            </NavigationMenuLink>
+                                                        ))}
+                                                    </Box>
+                                                    {/* Column 2 */}
+                                                    <Box sx={{ flex: 1, p: 2 }}>
+                                                        {item.dropdown.slice(10, 20).map((subItem) => (
+                                                            <NavigationMenuLink
+                                                                key={subItem.label}
+                                                                to={subItem.path}
+                                                                asChild
+                                                                onClick={handleMenuClose}
+                                                            >
+                                                                {subItem.label}
+                                                            </NavigationMenuLink>
+                                                        ))}
+                                                    </Box>
+                                                    {/* Column 3 */}
+                                                    <Box sx={{ flex: 1, p: 2 }}>
+                                                        {item.dropdown.slice(20).map((subItem) => (
+                                                            <NavigationMenuLink
+                                                                key={subItem.label}
+                                                                to={subItem.path}
+                                                                asChild
+                                                                onClick={handleMenuClose}
+                                                            >
+                                                                {subItem.label}
+                                                            </NavigationMenuLink>
+                                                        ))}
+                                                    </Box>
                                                 </Box>
                                             </NavigationMenuContent>
-
                                         </NavigationMenuItem>
                                     ) : (
                                         <NavigationMenuItem key={item.label}>

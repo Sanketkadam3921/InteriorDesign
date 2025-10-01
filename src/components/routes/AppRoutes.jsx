@@ -6,8 +6,10 @@ import ProjectsList from "../pages/projects/ProjectsList";
 import DesignList from "../pages/designs/DesignList";
 import DesignDetail from "../pages/designs/DesignDetail";
 import DesignCategories from "../pages/designs/DesignCategories";
+import DesignCategory from "../pages/designs/DesignCatergory";
 import ContactForm from "../pages/enquiries/ContactForm";
 import ProjectDetail from "../pages/projects/ProjectDetail";
+import FAQ from "../pages/faq/FAQ";
 import NotFound from "../pages/notfound/NotFound";
 
 export default function AppRoutes() {
@@ -20,8 +22,10 @@ export default function AppRoutes() {
                     <Route path="projects/:id" element={<ProjectDetail />} />
                     <Route path="designs" element={<DesignList />} />
                     <Route path="designs/categories" element={<DesignCategories />} />
-                    <Route path="designs/:id" element={<DesignDetail />} />
+                    <Route path="designs/:category" element={<DesignCategory />} />
+                    <Route path="designs/:category/:id" element={<DesignDetail />} />
                     <Route path="contact" element={<ContactForm />} />
+                    <Route path="faq" element={<FAQ />} />
                     <Route path="*" element={<NotFound />} />
                 </Route>
             </Routes>

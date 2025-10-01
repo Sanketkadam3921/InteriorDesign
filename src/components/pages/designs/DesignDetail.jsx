@@ -1,43 +1,91 @@
 import React from 'react';
-import { Box, Container, Typography, Grid, Card, CardContent, CardMedia, Button, Chip, Breadcrumbs, Link } from '@mui/material';
-import { ArrowBack, Favorite, Share, ShoppingCart } from '@mui/icons-material';
+import { Box, Container, Typography, Grid, Card, CardContent, CardMedia, Button, Chip, Breadcrumbs, Link, useTheme } from '@mui/material';
+import { ArrowBack, Favorite, Share, ShoppingCart, Home } from '@mui/icons-material';
 import { useParams, useNavigate } from 'react-router-dom';
+import { masterBedroomDesignDetails } from './master-bedroom';
+import { kitchenDesignDetails } from './kitchen';
+import { bathroomDesignDetails } from './bathroom';
+import { livingroomDesignDetails } from './living-room';
+import { wardrobeDesignDetails } from './wardrobe';
+import { poojaroomDesignDetails } from './pooja-room';
+import { tvunitDesignDetails } from './tv-unit';
+import { falseceilingDesignDetails } from './false-ceiling';
+import { kidsbedroomDesignDetails } from './kids-bedroom';
+import { balconyDesignDetails } from './balcony';
+import { diningroomDesignDetails } from './dining-room';
+import { foyerDesignDetails } from './foyer';
+import { homeslivspaceDesignDetails } from './homes-livspace';
+import { homeofficeDesignDetails } from './home-office';
+import { guestbedroomDesignDetails } from './guest-bedroom';
+import { windowDesignDetails } from './window';
+import { flooringDesignDetails } from './flooring';
+import { walldecorDesignDetails } from './wall-decor';
+import { wallpaintDesignDetails } from './wall-paint';
+import { wallpaperDesignDetails } from './wallpaper';
+import { tileDesignDetails } from './tile';
+import { studyroomDesignDetails } from './study-room';
+import { kitchensinksDesignDetails } from './kitchen-sinks';
+import { spacesavingDesignDetails } from './space-saving';
+import { doorDesignDetails } from './door';
+import { staircaseDesignDetails } from './staircase';
+import { crockeryunitDesignDetails } from './crockery-unit';
+import { homebarDesignDetails } from './home-bar';
 
 export default function DesignDetail() {
-    const { id } = useParams();
+    const { category, id } = useParams();
     const navigate = useNavigate();
+    const theme = useTheme();
 
-    // Mock design data - in real app, this would come from API
-    const design = {
-        id: parseInt(id),
-        title: 'Modern Minimalist Living Room',
-        category: 'living',
-        style: 'Modern',
-        price: '₹2,50,000',
+    // Comprehensive design data - in real app, this would come from API
+    const designsData = {
+        "master-bedroom": masterBedroomDesignDetails,
+        "kitchen": kitchenDesignDetails,
+        "bathroom": bathroomDesignDetails,
+        "living-room": livingroomDesignDetails,
+        "wardrobe": wardrobeDesignDetails,
+        "pooja-room": poojaroomDesignDetails,
+        "tv-unit": tvunitDesignDetails,
+        "false-ceiling": falseceilingDesignDetails,
+        "kids-bedroom": kidsbedroomDesignDetails,
+        "balcony": balconyDesignDetails,
+        "dining-room": diningroomDesignDetails,
+        "foyer": foyerDesignDetails,
+        "homes-livspace": homeslivspaceDesignDetails,
+        "home-office": homeofficeDesignDetails,
+        "guest-bedroom": guestbedroomDesignDetails,
+        "window": windowDesignDetails,
+        "flooring": flooringDesignDetails,
+        "wall-decor": walldecorDesignDetails,
+        "wall-paint": wallpaintDesignDetails,
+        "wallpaper": wallpaperDesignDetails,
+        "tile": tileDesignDetails,
+        "study-room": studyroomDesignDetails,
+        "kitchen-sinks": kitchensinksDesignDetails,
+        "space-saving": spacesavingDesignDetails,
+        "door": doorDesignDetails,
+        "staircase": staircaseDesignDetails,
+        "crockery-unit": crockeryunitDesignDetails,
+        "home-bar": homebarDesignDetails,
+    };
+
+    const design = designsData[category]?.[id] || {
+        id: id,
+        title: 'Design Not Found',
+        category: category,
+        style: 'Unknown',
+        price: 'N/A',
         image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800',
-        description: 'Clean lines and neutral colors create a serene living space that promotes relaxation and comfort.',
-        longDescription: 'This modern minimalist living room design focuses on simplicity, functionality, and natural light. The design incorporates clean geometric lines, neutral color palette, and carefully selected furniture pieces that serve both aesthetic and practical purposes. The space features large windows to maximize natural light, built-in storage solutions to maintain the minimalist aesthetic, and carefully curated decor items that add personality without clutter.',
-        images: [
-            'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800',
-            'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800',
-            'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800',
-            'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800'
-        ],
-        features: [
-            'Neutral Color Palette',
-            'Clean Geometric Lines',
-            'Built-in Storage Solutions',
-            'Natural Light Maximization',
-            'Minimalist Furniture Selection',
-            'Functional Layout Design'
-        ],
+        description: 'This design could not be found.',
+        longDescription: 'The requested design is not available.',
+        images: ['https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800'],
+        features: [],
         specifications: {
-            area: '300 sq ft',
-            style: 'Modern Minimalist',
-            colorScheme: 'Neutral',
-            materials: 'Wood, Metal, Glass',
-            lighting: 'Natural + LED',
-            furniture: 'Built-in + Modular'
+            area: 'N/A',
+            style: 'N/A',
+            colorScheme: 'N/A',
+            materials: 'N/A',
+            lighting: 'N/A',
+            furniture: 'N/A'
         }
     };
 
@@ -49,8 +97,9 @@ export default function DesignDetail() {
                     color="inherit"
                     href="/"
                     onClick={(e) => { e.preventDefault(); navigate('/'); }}
-                    sx={{ cursor: 'pointer' }}
+                    sx={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 0.5 }}
                 >
+                    <Home fontSize="small" />
                     Home
                 </Link>
                 <Link
@@ -61,26 +110,47 @@ export default function DesignDetail() {
                 >
                     Designs
                 </Link>
+                <Link
+                    color="inherit"
+                    href={`/designs/${category}`}
+                    onClick={(e) => { e.preventDefault(); navigate(`/designs/${category}`); }}
+                    sx={{ cursor: 'pointer' }}
+                >
+                    {category?.replace("-", " ").replace(/\b\w/g, l => l.toUpperCase())}
+                </Link>
                 <Typography color="text.primary">{design.title}</Typography>
             </Breadcrumbs>
 
             {/* Back Button */}
             <Button
                 startIcon={<ArrowBack />}
-                onClick={() => navigate('/designs')}
+                onClick={() => navigate(`/designs/${category}`)}
                 sx={{ mb: 3 }}
             >
-                Back to Designs
+                Back to {category?.replace("-", " ").replace(/\b\w/g, l => l.toUpperCase())} Designs
             </Button>
 
             {/* Design Header */}
             <Box sx={{ mb: 4 }}>
-                <Typography variant="h3" component="h1" gutterBottom>
+                <Typography variant="h3" component="h1" gutterBottom sx={{ color: theme.palette.text.primary }}>
                     {design.title}
                 </Typography>
                 <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', alignItems: 'center', mb: 2 }}>
-                    <Chip label={design.style} color="primary" />
-                    <Chip label={design.price} variant="outlined" color="secondary" />
+                    <Chip
+                        label={design.style}
+                        sx={{
+                            backgroundColor: theme.palette.primary.main,
+                            color: theme.palette.primary.contrastText
+                        }}
+                    />
+                    <Chip
+                        label={design.price}
+                        variant="outlined"
+                        sx={{
+                            borderColor: theme.palette.secondary.main,
+                            color: theme.palette.secondary.main
+                        }}
+                    />
                 </Box>
             </Box>
 
@@ -211,13 +281,19 @@ export default function DesignDetail() {
             </Box>
 
             {/* Action Buttons */}
-            <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', mb: 4 }}>
+            <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', mb: 4, flexWrap: 'wrap' }}>
                 <Button
                     variant="contained"
                     size="large"
                     startIcon={<ShoppingCart />}
                     onClick={() => navigate('/contact')}
-                    sx={{ px: 4 }}
+                    sx={{
+                        px: 4,
+                        backgroundColor: theme.palette.primary.main,
+                        '&:hover': {
+                            backgroundColor: theme.palette.primary.dark,
+                        }
+                    }}
                 >
                     Get This Design
                 </Button>
@@ -225,6 +301,14 @@ export default function DesignDetail() {
                     variant="outlined"
                     size="large"
                     startIcon={<Favorite />}
+                    sx={{
+                        borderColor: theme.palette.primary.main,
+                        color: theme.palette.primary.main,
+                        '&:hover': {
+                            borderColor: theme.palette.primary.dark,
+                            backgroundColor: theme.palette.action.hover,
+                        }
+                    }}
                 >
                     Save to Favorites
                 </Button>
@@ -232,14 +316,30 @@ export default function DesignDetail() {
                     variant="outlined"
                     size="large"
                     startIcon={<Share />}
+                    sx={{
+                        borderColor: theme.palette.secondary.main,
+                        color: theme.palette.secondary.main,
+                        '&:hover': {
+                            borderColor: theme.palette.secondary.dark,
+                            backgroundColor: theme.palette.action.hover,
+                        }
+                    }}
                 >
                     Share
                 </Button>
             </Box>
 
             {/* CTA */}
-            <Box sx={{ textAlign: 'center', py: 4, backgroundColor: '#f5f5f5', borderRadius: 2 }}>
-                <Typography variant="h6" gutterBottom>
+            <Box
+                sx={{
+                    textAlign: 'center',
+                    py: 4,
+                    backgroundColor: theme.palette.background.default,
+                    borderRadius: 2,
+                    border: `1px solid ${theme.palette.divider}`
+                }}
+            >
+                <Typography variant="h6" gutterBottom sx={{ color: theme.palette.text.primary }}>
                     Want to customize this design?
                 </Typography>
                 <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
@@ -249,7 +349,13 @@ export default function DesignDetail() {
                     variant="contained"
                     size="large"
                     onClick={() => navigate('/contact')}
-                    sx={{ px: 4 }}
+                    sx={{
+                        px: 4,
+                        backgroundColor: theme.palette.primary.main,
+                        '&:hover': {
+                            backgroundColor: theme.palette.primary.dark,
+                        }
+                    }}
                 >
                     Request Customization
                 </Button>
